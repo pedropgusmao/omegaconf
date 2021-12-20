@@ -10,6 +10,7 @@ from .errors import (
 from .listconfig import ListConfig
 from .nodes import (
     AnyNode,
+    BytesNode,
     BooleanNode,
     EnumNode,
     FloatNode,
@@ -51,6 +52,7 @@ __all__ = [
     "AnyNode",
     "IntegerNode",
     "StringNode",
+    "Bytes",
     "BooleanNode",
     "EnumNode",
     "FloatNode",
