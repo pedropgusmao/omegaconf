@@ -10,8 +10,8 @@ from .errors import (
 from .listconfig import ListConfig
 from .nodes import (
     AnyNode,
-    BytesNode,
     BooleanNode,
+    BytesNode,
     EnumNode,
     FloatNode,
     IntegerNode,
