@@ -52,7 +52,7 @@ __all__ = [
     "AnyNode",
     "IntegerNode",
     "StringNode",
-    "Bytes",
+    "BytesNode",
     "BooleanNode",
     "EnumNode",
     "FloatNode",
