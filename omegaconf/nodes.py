@@ -244,6 +244,7 @@ class BytesNode(ValueNode):
         )
 
     def _validate_and_convert_impl(self, value: Any) -> bytes:
+        val : bytes 
         try:
             if type(value) == bytes:
                 val = value
