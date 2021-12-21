@@ -174,8 +174,8 @@ class StringNode(ValueNode):
         if type(value) == bytes:
             val = value.hex()
         else:
-            val = str(value)
-        return val
+            val = value
+        return str(val)
 
     def __deepcopy__(self, memo: Dict[int, Any]) -> "StringNode":
         res = StringNode()
