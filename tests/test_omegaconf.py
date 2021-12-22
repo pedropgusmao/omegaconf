@@ -6,6 +6,7 @@ from pytest import mark, param, raises, warns
 from omegaconf import (
     MISSING,
     BooleanNode,
+    BytesNode,
     DictConfig,
     EnumNode,
     FloatNode,
@@ -237,8 +238,9 @@ def test_coverage_for_deprecated_OmegaConf_is_optional() -> None:
     [
         (lambda none: StringNode(value="foo" if not none else None, is_optional=True)),
         (lambda none: IntegerNode(value=10 if not none else None, is_optional=True)),
-        (lambda none: FloatNode(value=10 if not none else None, is_optional=True)),
+        (lambda none: FloatNode(value=10.0 if not none else None, is_optional=True)),
         (lambda none: BooleanNode(value=True if not none else None, is_optional=True)),
+        (lambda none: BytesNode(value=b"123" if not none else None, is_optional=True)),
         (
             lambda none: EnumNode(
                 enum_type=Color,
