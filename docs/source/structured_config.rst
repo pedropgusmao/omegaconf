@@ -73,6 +73,8 @@ fields during construction.
     pi: 3.1415
     is_awesome: true
     height: TALL
+    random_seq: !!binary |
+      MTIz
     description: text
     <BLANKLINE>
 
