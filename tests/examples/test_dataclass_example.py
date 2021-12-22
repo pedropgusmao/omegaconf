@@ -181,10 +181,10 @@ manager:
 @dataclass
 class Lists:
     # List with Any as type can take any primitive type OmegaConf supports:
-    # int, float, bool, str and Enums as well as Any (which is the same as not having a specified type).
+    # int, float, bool, str, bytes and Enums as well as Any (which is the same as not having a specified type).
     untyped_list: List[Any] = field(default_factory=lambda: [1, "foo", True])
 
-    # typed lists can hold int, bool, str, float or enums.
+    # typed lists can hold int, bool, str, bytes, float or enums.
     int_list: List[int] = field(default_factory=lambda: [10, 20, 30])
 
 
@@ -207,7 +207,7 @@ def test_typed_list_runtime_validation() -> None:
 @dataclass
 class Dicts:
     # Key must be a string or Enum, value can be any primitive type OmegaConf supports:
-    # int, float, bool, str and Enums as well as Any (which is the same as not having a specified type).
+    # int, float, bool, str, bytes and Enums as well as Any (which is the same as not having a specified type).
     untyped_dict: Dict[str, Any] = field(
         default_factory=lambda: {"foo": True, "bar": 100}
     )
