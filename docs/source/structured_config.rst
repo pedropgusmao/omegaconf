@@ -33,7 +33,8 @@ Simple types include
  - int: numeric integers
  - float: numeric floating point values
  - bool: boolean values (True, False, On, Off etc)
- - str: Any string
+ - str: any string
+ - bytes: an immutable sequence of numbers in [0, 255]
  - Enums: User defined enums
 
 The following class defines fields with all simple types:
@@ -50,6 +51,7 @@ The following class defines fields with all simple types:
     ...     pi: float = 3.1415
     ...     is_awesome: bool = True
     ...     height: Height = Height.SHORT
+    ...     random_seq: bytes = b'123'
     ...     description: str = "text"
 
 You can create a config based on the SimpleTypes class itself or an instance of it.
@@ -206,7 +208,7 @@ You can assign subclasses:
 Lists
 ^^^^^
 Structured Config fields annotated with ``typing.List`` or ``typing.Tuple`` can hold any type
-supported by OmegaConf (``int``, ``float``. ``bool``, ``str``, ``Enum`` or Structured configs).
+supported by OmegaConf (``int``, ``float``. ``bool``, ``str``, ``bytes``, ``Enum`` or Structured configs).
 
 .. doctest::
 
@@ -218,7 +220,7 @@ supported by OmegaConf (``int``, ``float``. ``bool``, ``str``, ``Enum`` or Struc
 
     >>> @dataclass
     ... class ListsExample:
-    ...     # Typed list can hold Any, int, float, bool, str and Enums as well
+    ...     # Typed list can hold Any, int, float, bool, str, bytes and Enums as well
     ...     # as arbitrary Structured configs
     ...     ints: List[int] = field(default_factory=lambda: [10, 20, 30])
     ...     bools: Tuple[bool, bool] = field(default_factory=lambda: (True, False))
@@ -245,8 +247,8 @@ In the example below, the OmegaConf object ``conf`` (which is actually an instan
 Dictionaries
 ^^^^^^^^^^^^
 Dictionaries are supported via annotation of structured config fields with ``typing.Dict``.
-Keys must be typed as one of ``str``, ``int``, ``Enum``, ``float``, or ``bool``. Values can
-be any of the types supported by OmegaConf (``Any``, ``int``, ``float``, ``bool``, ``str`` and ``Enum`` as well
+Keys must be typed as one of ``str``, ``int``, ``Enum``, ``float``, ``bytes``, or ``bool``. Values can
+be any of the types supported by OmegaConf (``Any``, ``int``, ``float``, ``bool``, ``bytes``, ``str`` and ``Enum`` as well
 as arbitrary Structured configs)
 
 .. doctest::
@@ -255,7 +257,7 @@ as arbitrary Structured configs)
     >>> from typing import Dict
     >>> @dataclass
     ... class DictExample:
-    ...     # Typed dict keys are strings; values can be typed as Any, int, float, bool, str and Enums or
+    ...     # Typed dict keys are strings; values can be typed as Any, int, float, bool, str, bytes and Enums or
     ...     # arbitrary Structured configs
     ...     ints: Dict[str, int] = field(default_factory=lambda: {"a": 10, "b": 20, "c": 30})
     ...     bools: Dict[str, bool] = field(default_factory=lambda: {"Uno": True, "Zoro": False})
