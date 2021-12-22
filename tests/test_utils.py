@@ -38,6 +38,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
     [
         # Any
         param(Any, "foo", AnyNode("foo"), id="any"),
+        param(Any, b"binary", AnyNode(b"binary"), id="any"),
         param(Any, True, AnyNode(True), id="any"),
         param(Any, 1, AnyNode(1), id="any"),
         param(Any, 1.0, AnyNode(1.0), id="any"),
@@ -47,6 +48,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(Any, [], ListConfig(content=[]), id="any_as_list"),
         # int
         param(int, "foo", ValidationError, id="int"),
+        param(int, b"binary", ValidationError, id="int"),
         param(int, True, ValidationError, id="int"),
         param(int, 1, IntegerNode(1), id="int"),
         param(int, 1.0, ValidationError, id="int"),
@@ -54,6 +56,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(int, b"123", ValidationError, id="int"),
         # float
         param(float, "foo", ValidationError, id="float"),
+        param(float, b"binary", ValidationError, id="float"),
         param(float, True, ValidationError, id="float"),
         param(float, 1, FloatNode(1), id="float"),
         param(float, 1.0, FloatNode(1.0), id="float"),
@@ -61,6 +64,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(float, b"123", ValidationError, id="float"),
         # bool
         param(bool, "foo", ValidationError, id="bool"),
+        param(bool, b"binary", ValidationError, id="bool"),
         param(bool, True, BooleanNode(True), id="bool"),
         param(bool, 1, BooleanNode(True), id="bool"),
         param(bool, 0, BooleanNode(False), id="bool"),
@@ -73,19 +77,18 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(bool, b"123", ValidationError, id="bool"),
         # str
         param(str, "foo", StringNode("foo"), id="str"),
+        param(str, b"binary", ValidationError, id="str"),
         param(str, True, StringNode("True"), id="str"),
         param(str, 1, StringNode("1"), id="str"),
         param(str, 1.0, StringNode("1.0"), id="str"),
         param(str, Color.RED, StringNode("Color.RED"), id="str"),
-        param(str, b"123", StringNode("123"), id="str"),
         # bytes
-        param(bytes, "foo", BytesNode(b"foo"), id="bytes"),
+        param(bytes, "foo", ValidationError, id="bytes"),
+        param(bytes, b"binary", BytesNode(b"binary"), id="bytes"),
         param(bytes, True, ValidationError, id="bytes"),
         param(bytes, 1, ValidationError, id="bytes"),
-        param(bytes, 0, ValidationError, id="bytes"),
         param(bytes, 1.0, ValidationError, id="bytes"),
         param(bytes, Color.RED, ValidationError, id="bytes"),
-        param(bytes, "true", BytesNode(b"true"), id="bytes"),
         # Color
         param(Color, "foo", ValidationError, id="Color"),
         param(Color, True, ValidationError, id="Color"),
@@ -93,6 +96,9 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(Color, 1.0, ValidationError, id="Color"),
         param(Color, Color.RED, EnumNode(enum_type=Color, value=Color.RED), id="Color"),
         param(Color, "RED", EnumNode(enum_type=Color, value=Color.RED), id="Color"),
+        param(
+            Color, "Color.RED", EnumNode(enum_type=Color, value=Color.RED), id="Color"
+        ),
         param(Color, b"123", ValidationError, id="Color"),
         param(
             Color, "Color.RED", EnumNode(enum_type=Color, value=Color.RED), id="Color"

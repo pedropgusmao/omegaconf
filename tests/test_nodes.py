@@ -39,7 +39,7 @@ from tests import Color, Enum1, IllegalType, User
         (StringNode, "abc", "abc"),
         (StringNode, 100, "100"),
         (StringNode, Color.RED, "Color.RED"),
-        (StringNode, b"\xf0\xf1\xf2", "f0f1f2"),
+        (StringNode, b"abc123", "abc123"),
         # integer
         (IntegerNode, 10, 10),
         (IntegerNode, "10", 10),
@@ -55,7 +55,7 @@ from tests import Color, Enum1, IllegalType, User
         (FloatNode, "10e-3", 10e-3),
         # bytes
         (BytesNode, b"\xf0\xf1\xf2", b"\xf0\xf1\xf2"),
-        (BytesNode, "f0f1f2", b"\xf0\xf1\xf2"),
+        (BytesNode, "abc123", b"abc123"),
         # bool true
         (BooleanNode, True, True),
         (BooleanNode, "Y", True),
@@ -110,6 +110,7 @@ def test_valid_inputs(type_: type, input_: Any, output_: Any) -> None:
         (BytesNode, "abc"),
         (BytesNode, 23),
         (BytesNode, 3.14),
+        (BytesNode, True),
         (BooleanNode, "Nope"),
         (BooleanNode, "Yup"),
         (BooleanNode, Color.RED),
@@ -128,6 +129,7 @@ def test_valid_inputs(type_: type, input_: Any, output_: Any) -> None:
         (StringNode, [1, 2]),
         (StringNode, ListConfig([1, 2])),
         (StringNode, {"foo": "var"}),
+        (StringNode, b"\xf0\xf1\xf2"),
         (FloatNode, DictConfig({"foo": "var"})),
         (AnyNode, [1, 2]),
         (AnyNode, ListConfig([1, 2])),
@@ -261,6 +263,7 @@ def test_merge_validation_error(c1: Dict[str, Any], c2: Dict[str, Any]) -> None:
         (BooleanNode, True, "invalid"),
         (AnyNode, "aaa", None),
         (StringNode, "blah", None),
+        (BytesNode, b"foobar", None),
     ],
 )
 def test_accepts_mandatory_missing(
@@ -369,7 +372,7 @@ def test_legal_assignment(
         (IntegerNode(), "foo"),
         (BooleanNode(), "foo"),
         (FloatNode(), "foo"),
-        (BytesNode(), "foo"),
+        (BytesNode(), 123.456),
         (EnumNode(enum_type=Enum1), "foo"),
     ],
 )
