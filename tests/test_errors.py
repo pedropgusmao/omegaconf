@@ -15,6 +15,7 @@ from omegaconf import (
     ListConfig,
     OmegaConf,
     ReadonlyConfigError,
+    StringNode,
     UnsupportedValueType,
     ValidationError,
 )
@@ -711,9 +712,22 @@ params = [
     param(
         Expected(
             create=lambda: DictConfig({"bar": BytesNode(b"abc123")}),
-            op=lambda cfg: cfg.__setattr__("bar", "x"),
+            op=lambda cfg: cfg.__setattr__("bar", 123.4),
             exception_type=ValidationError,
-            msg="Value 'x' of type 'str' could not be converted to Bytes",
+            msg="Value '123.4' of type 'float' could not be converted to Bytes",
+            key="bar",
+            full_key="bar",
+            child_node=lambda cfg: cfg._get_node("bar"),
+        ),
+        id="typed_DictConfig:assign_with_invalid_value,bytes",
+    ),
+    param(
+        Expected(
+            create=lambda: DictConfig({"bar": StringNode("abc123")}),
+            op=lambda cfg: cfg.__setattr__("bar", b"\xf0\xf1\xf2"),
+            exception_type=ValidationError,
+            msg=r"Value b'\xf0\xf1\xf2' of type 'bytes' could not be converted to String: "
+            + "'utf-8' codec can't decode byte 0xf0 in position 0: invalid continuation byte",
             key="bar",
             full_key="bar",
             child_node=lambda cfg: cfg._get_node("bar"),

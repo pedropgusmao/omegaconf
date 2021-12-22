@@ -172,7 +172,12 @@ class StringNode(ValueNode):
         if OmegaConf.is_config(value) or is_primitive_container(value):
             raise ValidationError("Cannot convert '$VALUE_TYPE' to string: '$VALUE'")
         if type(value) == bytes:
-            val = value.decode()
+            try:
+                val = value.decode()
+            except UnicodeDecodeError as exc:
+                raise ValidationError(
+                    f"Value $VALUE of type '$VALUE_TYPE' could not be converted to String: {exc}"
+                )
         else:
             val = value
         return str(val)
