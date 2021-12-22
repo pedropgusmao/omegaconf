@@ -23,6 +23,7 @@ from omegaconf.errors import UnsupportedValueType, ValidationError
 from omegaconf.nodes import (
     AnyNode,
     BooleanNode,
+    BytesNode,
     EnumNode,
     FloatNode,
     IntegerNode,
@@ -40,6 +41,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(Any, True, AnyNode(True), id="any"),
         param(Any, 1, AnyNode(1), id="any"),
         param(Any, 1.0, AnyNode(1.0), id="any"),
+        param(Any, b"123", AnyNode(b"123"), id="any"),
         param(Any, Color.RED, AnyNode(Color.RED), id="any"),
         param(Any, {}, DictConfig(content={}), id="any_as_dict"),
         param(Any, [], ListConfig(content=[]), id="any_as_list"),
@@ -49,12 +51,14 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(int, 1, IntegerNode(1), id="int"),
         param(int, 1.0, ValidationError, id="int"),
         param(int, Color.RED, ValidationError, id="int"),
+        param(int, b"123", ValidationError, id="int"),
         # float
         param(float, "foo", ValidationError, id="float"),
         param(float, True, ValidationError, id="float"),
         param(float, 1, FloatNode(1), id="float"),
         param(float, 1.0, FloatNode(1.0), id="float"),
         param(float, Color.RED, ValidationError, id="float"),
+        param(float, b"123", ValidationError, id="float"),
         # bool
         param(bool, "foo", ValidationError, id="bool"),
         param(bool, True, BooleanNode(True), id="bool"),
@@ -66,12 +70,22 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(bool, "false", BooleanNode(False), id="bool"),
         param(bool, "on", BooleanNode(True), id="bool"),
         param(bool, "off", BooleanNode(False), id="bool"),
+        param(bool, b"123", ValidationError, id="bool"),
         # str
         param(str, "foo", StringNode("foo"), id="str"),
         param(str, True, StringNode("True"), id="str"),
         param(str, 1, StringNode("1"), id="str"),
         param(str, 1.0, StringNode("1.0"), id="str"),
         param(str, Color.RED, StringNode("Color.RED"), id="str"),
+        param(str, b"123", StringNode("123"), id="str"),
+        # bytes
+        param(bytes, "foo", BytesNode(b"foo"), id="bytes"),
+        param(bytes, True, ValidationError, id="bytes"),
+        param(bytes, 1, ValidationError, id="bytes"),
+        param(bytes, 0, ValidationError, id="bytes"),
+        param(bytes, 1.0, ValidationError, id="bytes"),
+        param(bytes, Color.RED, ValidationError, id="bytes"),
+        param(bytes, "true", BytesNode(b"true"), id="bytes"),
         # Color
         param(Color, "foo", ValidationError, id="Color"),
         param(Color, True, ValidationError, id="Color"),
@@ -79,6 +93,7 @@ from tests import Color, ConcretePlugin, Dataframe, IllegalType, Plugin, User
         param(Color, 1.0, ValidationError, id="Color"),
         param(Color, Color.RED, EnumNode(enum_type=Color, value=Color.RED), id="Color"),
         param(Color, "RED", EnumNode(enum_type=Color, value=Color.RED), id="Color"),
+        param(Color, b"123", ValidationError, id="Color"),
         param(
             Color, "Color.RED", EnumNode(enum_type=Color, value=Color.RED), id="Color"
         ),
