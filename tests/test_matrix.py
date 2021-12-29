@@ -6,6 +6,7 @@ from pytest import mark, raises, warns
 
 from omegaconf import (
     BooleanNode,
+    BytesNode,
     DictConfig,
     EnumNode,
     FloatNode,
@@ -58,6 +59,7 @@ def verify(
     "node_type, values",
     [
         (BooleanNode, [True, False]),
+        (BytesNode, [b"hello"]),
         (FloatNode, [3.1415]),
         (IntegerNode, [42]),
         (StringNode, ["hello"]),
@@ -92,6 +94,7 @@ def verify(
     ],
     ids=(
         "BooleanNode",
+        "BytesNode",
         "FloatNode",
         "IntegerNode",
         "StringNode",
