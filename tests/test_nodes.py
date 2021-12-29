@@ -290,7 +290,8 @@ def test_accepts_mandatory_missing(
 
 
 @mark.parametrize(
-    "type_", [BooleanNode, EnumNode, FloatNode, IntegerNode, StringNode, AnyNode]
+    "type_",
+    [BooleanNode, EnumNode, FloatNode, IntegerNode, StringNode, AnyNode],
 )
 @mark.parametrize(
     "values, success_map",
@@ -515,6 +516,9 @@ def test_deepcopy(obj: Any) -> None:
         (FloatNode(1.0), 1.0, True),
         (FloatNode(1), 1, True),
         (FloatNode(1.0), "foo", False),
+        (BytesNode(), None, True),
+        (BytesNode(), b"binary", False),
+        (BytesNode(b"binary"), b"binary", True),
         (BooleanNode(), True, False),
         (BooleanNode(), False, False),
         (BooleanNode(), None, True),

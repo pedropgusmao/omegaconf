@@ -257,9 +257,9 @@ class BytesNode(ValueNode):
                 val = value.encode()
             else:
                 raise ValueError()
-        except ValueError:
+        except (UnicodeEncodeError, ValueError) as exc:
             raise ValidationError(
-                "Value '$VALUE' of type '$VALUE_TYPE' could not be converted to Bytes"
+                "Value '$VALUE' of type '$VALUE_TYPE' could not be converted to Bytes: {exc}"
             )
         return val
 
