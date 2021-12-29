@@ -673,7 +673,7 @@ class BaseContainer(Container, ABC):
         from .listconfig import ListConfig
         from .omegaconf import _select_one
 
-        if not isinstance(key, (int, str, Enum, float, bool, slice, type(None))):
+        if not isinstance(key, (int, str, Enum, float, bool, slice, bytes, type(None))):
             return ""
 
         def _slice_to_str(x: slice) -> str:
@@ -689,6 +689,8 @@ class BaseContainer(Container, ABC):
                 key = key.name
             elif isinstance(key, (int, float, bool)):
                 key = str(key)
+            elif isinstance(key, bytes):
+                key = key.decode()
 
             if issubclass(parent_type, ListConfig):
                 if full_key != "":
