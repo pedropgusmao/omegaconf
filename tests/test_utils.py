@@ -724,6 +724,11 @@ def test_nullcontext() -> None:
             )
         ),
         (
+            lambda is_optional, missing: BytesNode(
+                value=b"binary" if not missing else "???", is_optional=is_optional
+            )
+        ),
+        (
             lambda is_optional, missing: EnumNode(
                 enum_type=Color,
                 value=Color.RED if not missing else "???",
