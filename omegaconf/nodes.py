@@ -259,7 +259,7 @@ class BytesNode(ValueNode):
                 raise ValueError()
         except (UnicodeEncodeError, ValueError) as exc:
             raise ValidationError(
-                "Value '$VALUE' of type '$VALUE_TYPE' could not be converted to Bytes: {exc}"
+                f"Value '$VALUE' of type '$VALUE_TYPE' could not be converted to Bytes: {exc}"
             )
         return val
 
