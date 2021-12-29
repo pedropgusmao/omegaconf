@@ -533,6 +533,7 @@ def test_is_list_annotation(type_: Any, expected: Any) -> Any:
         param(FloatNode(10.0, is_optional=False), float, id="FloatNode"),
         param(BooleanNode(True, is_optional=False), bool, id="BooleanNode"),
         param(StringNode("bar", is_optional=False), str, id="StringNode"),
+        param(BytesNode(b"binary", is_optional=False), bytes, id="BytesNode"),
         param(
             EnumNode(enum_type=Color, value=Color.RED, is_optional=False),
             Color,
