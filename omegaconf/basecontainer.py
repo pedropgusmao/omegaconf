@@ -736,7 +736,7 @@ class BaseContainer(Container, ABC):
             cur = cur._get_parent()
             if id(cur) in memo:
                 raise ConfigCycleDetectedException(
-                    f"Cycle when iterating over parents of key `{key!r}`"
+                    f"Cycle when iterating over parents of key `{key}`"  # type: ignore
                 )
             memo.add(id(cur))
             assert cur is not None
