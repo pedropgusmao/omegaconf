@@ -182,6 +182,15 @@ def test_load_empty_file(tmpdir: str) -> None:
             SubscriptedDict, "dict_str", int, str, False, Dict[str, int], id="dict_str"
         ),
         param(
+            SubscriptedDict,
+            "dict_bytes",
+            int,
+            bytes,
+            False,
+            Dict[bytes, int],
+            id="dict_bytes",
+        ),
+        param(
             SubscriptedDict, "dict_int", int, int, False, Dict[int, int], id="dict_int"
         ),
         param(
@@ -298,6 +307,9 @@ def test_pickle_untyped(
             else:
                 return cfg._get_node(key)
 
+        print(cfg2)
+        print(cfg)
+        print(node)
         assert cfg == cfg2
         assert get_ref_type(get_node(cfg2, node)) == ref_type
         assert get_node(cfg2, node)._metadata.element_type == element_type
