@@ -86,7 +86,7 @@ def test_conversions() -> None:
     conf.data = b"def"  # ok, type matches
 
     # ok, the String "def" is converted to the bytes b"def"
-    conf.data = "def"
+    conf.data = "def"  # type: ignore
 
     assert conf.data == b"def"
     with raises(ValidationError):
