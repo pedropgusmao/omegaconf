@@ -209,7 +209,13 @@ def cfg_typed(
 
 @mark.parametrize(
     "cfg_key_type,data",
-    [(str, {"a": 10}), (int, {1: "a"}), (float, {123.45: "a"}), (bool, {True: "a"})],
+    [
+        (str, {"a": 10}),
+        (bytes, {b"abc": "a"}),
+        (int, {1: "a"}),
+        (float, {123.45: "a"}),
+        (bool, {True: "a"}),
+    ],
 )
 class TestPrimitiveTypeDunderMethods:
     """Compare DictConfig with python dict in the case where key_type is a primitive type."""
