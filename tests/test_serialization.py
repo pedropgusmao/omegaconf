@@ -307,9 +307,6 @@ def test_pickle_untyped(
             else:
                 return cfg._get_node(key)
 
-        print(cfg2)
-        print(cfg)
-        print(node)
         assert cfg == cfg2
         assert get_ref_type(get_node(cfg2, node)) == ref_type
         assert get_node(cfg2, node)._metadata.element_type == element_type
