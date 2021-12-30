@@ -26,6 +26,7 @@ class SimpleTypes:
     is_awesome: bool = True
     height: Height = Height.SHORT
     description: str = "text"
+    data: bytes = b"abc"
 
 
 def test_simple_types_class() -> None:
@@ -36,6 +37,7 @@ def test_simple_types_class() -> None:
     assert conf.is_awesome is True
     assert conf.height == Height.SHORT
     assert conf.description == "text"
+    assert conf.data == b"abc"
 
 
 def test_static_typing() -> None:
@@ -57,6 +59,7 @@ def test_simple_types_obj() -> None:
     assert conf.is_awesome is True
     assert conf.height == Height.SHORT
     assert conf.description == "text"
+    assert conf.data == b"abc"
 
 
 def test_conversions() -> None:
@@ -78,6 +81,17 @@ def test_conversions() -> None:
     # ok, the int 20 is converted to the string "20"
     conf.description = 20  # type: ignore
     assert conf.description == "20"
+
+    # The same should happen with bytes and string
+    conf.data = b"def"  # ok, type matches
+
+    # ok, the String "def" is converted to the bytes b"def"
+    conf.data = "def"
+
+    assert conf.data == b"def"
+    with raises(ValidationError):
+        # ValidationError: 1234 cannot be converted to bytes
+        conf.data = 1234  # type: ignore
 
     # booleans can take many forms
     for expected, values in {
