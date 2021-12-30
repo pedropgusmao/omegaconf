@@ -32,6 +32,7 @@ from tests import Enum1
 @fixture(
     params=[
         "str",
+        b"abc",
         1,
         3.1415,
         True,
@@ -59,6 +60,7 @@ def struct_mode(request: Any) -> Optional[bool]:
     "data",
     [
         param({"a": 10}, id="str"),
+        param({b"abc": 10}, id="bytes"),
         param({1: "a"}, id="int"),
         param({123.45: "a"}, id="float"),
         param({True: "a"}, id="bool"),
