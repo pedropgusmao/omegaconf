@@ -41,6 +41,7 @@ def test_to_yaml_unicode(input_: Any, expected: str) -> None:
     "input_, expected, type_",
     [
         (["1", 1], "- '1'\n- 1\n", int),
+        (["1", b"1"], "- '1'\n- !!binary |\n  MQ==\n", bytes),
         (["10e2", "1.0", 1.0], "- '10e2'\n- '1.0'\n- 1.0\n", float),
         (_utils.YAML_BOOL_TYPES, None, bool),
     ],
@@ -63,6 +64,7 @@ def test_to_yaml_string_primitive_types_list(
     "input_, expected, type_",
     [
         ({"b": "1", "a": 1}, "b: '1'\na: 1\n", int),
+        ({"b": "1", "a": b"1"}, "b: '1'\na: !!binary |\n  MQ==\n", bytes),
         ({"b": "10e2", "a": "1.0", "c": 1.0}, "b: '10e2'\na: '1.0'\nc: 1.0\n", float),
         (_utils.YAML_BOOL_TYPES, None, bool),
     ],
