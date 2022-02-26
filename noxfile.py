@@ -56,7 +56,9 @@ def coverage(session):
 @nox.session(python=PYTHON_VERSIONS)
 def lint(session):
     deps(session, editable_install=True)
-    session.run("mypy", ".", "--strict", silent=True)
+    session.run(
+        "mypy", ".", "--strict", "--install-types", "--non-interactive", silent=True
+    )
     session.run("isort", ".", "--check", silent=True)
     session.run("black", "--check", ".", silent=True)
     session.run("flake8")
@@ -71,7 +73,8 @@ def test_jupyter_notebook(session):
             )
         )
     deps(session, editable_install=False)
-    session.install("jupyter", "nbval")
+    # pytest pinned due to https://github.com/computationalmodelling/nbval/issues/180
+    session.install("jupyter", "nbval", "pytest<7.0.0")
     # Ignore deprecation warnings raised by jupyter_client in Python 3.10
     # https://github.com/jupyter/jupyter_client/issues/713
     extra_flags = (
